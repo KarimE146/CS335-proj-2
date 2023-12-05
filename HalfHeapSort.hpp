@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <chrono>
 
 int halfHeapSort ( std::vector<int>& nums, int& duration );
 
