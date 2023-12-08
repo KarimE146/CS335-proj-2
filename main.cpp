@@ -24,7 +24,7 @@ int main() {
     vect.push_back(77);
     vect.push_back(102);
     vect.push_back(96);
-    // vect.push_back(34);
+    //vect.push_back(34);
 
  
     for (int x : vect){
@@ -33,7 +33,12 @@ int main() {
     std::cout << "\n";
  
     int i;
-    std::cout << standardSort(vect,i);
+    std::cout << halfSelectionSort(vect,i);
+    std::cout << "\n";
+
+    for (int x : vect){
+        std::cout << x << " ";
+    }
     std::cout << "\n";
 
     return 0;
