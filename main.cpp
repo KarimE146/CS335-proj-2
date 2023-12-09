@@ -33,7 +33,7 @@ int main() {
     std::cout << "\n";
  
     int i;
-    std::cout << halfSelectionSort(vect,i);
+    std::cout << halfHeapSort(vect,i);
     std::cout << "\n";
 
     for (int x : vect){
