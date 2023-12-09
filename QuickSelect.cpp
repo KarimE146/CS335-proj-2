@@ -1,9 +1,11 @@
 #include "QuickSelect.hpp"
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    int pivot = *low; // Choose the leftmost element as the pivot
+    int pivot = *low; 
     auto i = low - nums.begin();
     auto j = high - nums.begin();
+
+    // we have to use Itr's so thats how we get the inciced for the first and last
 
     while (true) {
         do {
@@ -15,7 +17,7 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
         } while (nums[j] > pivot);
 
         if (i >= j) {
-            return nums.begin() + j; // Return the pivot position
+            return nums.begin() + j; 
         }
 
         std::swap(nums[i], nums[j]);
@@ -28,19 +30,19 @@ void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, s
         if (pivotPos > low) {
             quickSelectHelper(nums, low, pivotPos);
         }
-        // Note: We exclude the pivot from the recursive call on the right side
+
         if (pivotPos + 1 < high) {
             quickSelectHelper(nums, pivotPos + 1, high);
         }else{
         std::sort(nums.begin(),nums.end());
         }
+        //no clue how this works but it does? I think ?
     }
 }
 
 int quickSelect(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    // Choose the median of three as the initial pivot
     auto middle = nums.begin() + nums.size() / 2;
     if (*middle < *nums.begin()) {
         std::swap(*middle, *nums.begin());
@@ -51,6 +53,7 @@ int quickSelect(std::vector<int>& nums, int& duration) {
     if (*middle < *(nums.end() - 1)) {
         std::swap(*middle, *(nums.end() - 1));
     }
+    //median of 3 method^
 
     quickSelectHelper(nums, nums.begin(), nums.end());
 
