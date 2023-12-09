@@ -6,9 +6,7 @@ void inPlaceMergeSortRecursive(std::vector<int>& nums, std::vector<int>::iterato
         inPlaceMergeSortRecursive(nums, start, mid); 
         inPlaceMergeSortRecursive(nums, mid, end);   
         std::inplace_merge(start, mid, end);    
-            
     }
-        std::cout << "\n";
 }
 
 

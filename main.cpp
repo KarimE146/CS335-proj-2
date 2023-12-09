@@ -38,7 +38,7 @@ int main() {
     std::cout << "\n";
  
     int i;
-    std::cout << quickSelect(vect,i);
+    std::cout << inPlaceMergeSort(vect,i);
     std::cout << "\n";
 
     for (int x : vect){
