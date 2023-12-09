@@ -5,14 +5,12 @@ void inPlaceMergeSortRecursive(std::vector<int>& nums, std::vector<int>::iterato
         auto mid = start + std::distance(start, end) / 2;
         inPlaceMergeSortRecursive(nums, start, mid); 
         inPlaceMergeSortRecursive(nums, mid, end);   
-        std::inplace_merge(start, mid, end);        
-        
-        for (int x : nums){
-            std::cout << x << " ";
-        }
-        std::cout << "\n";
+        std::inplace_merge(start, mid, end);    
+            
     }
+        std::cout << "\n";
 }
+
 
 int inPlaceMergeSort(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();
@@ -30,3 +28,4 @@ int inPlaceMergeSort(std::vector<int>& nums, int& duration) {
         return nums[nums.size() / 2];
     } // Return the median
 }
+

@@ -24,7 +24,12 @@ int main() {
     vect.push_back(77);
     vect.push_back(102);
     vect.push_back(96);
-    //vect.push_back(34);
+    vect.push_back(55);
+    vect.push_back(43);
+    vect.push_back(93);
+    vect.push_back(38);
+    vect.push_back(89);
+    vect.push_back(11);
 
  
     for (int x : vect){
@@ -33,7 +38,7 @@ int main() {
     std::cout << "\n";
  
     int i;
-    std::cout << halfHeapSort(vect,i);
+    std::cout << quickSelect(vect,i);
     std::cout << "\n";
 
     for (int x : vect){
