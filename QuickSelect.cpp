@@ -58,11 +58,10 @@ int quickSelect(std::vector<int>& nums, int& duration) {
     std::chrono::duration<double> diff = end - start;
     duration = static_cast<int>(diff.count() * 1000);
 
-    return *middle; // Return the median
+    if (nums.size() % 2 == 0 )
+    {
+        return nums[(nums.size() / 2) -1];
+    }else{
+        return nums[nums.size() / 2];
+    } // Return the median
 }
-
-   // hoarePartition precondition: low points to the first element in the subnumsay to be partitioned. 
-   //The pivot is the last element in the subnumsay to be partitioned, and is pointed to by high.
-   // hoarePartition returns an iterator to the pivot after it's placed.
-   //Note that this implementation of hoarePartition makes it usable with different pivot selection methods, 
-   //but also requires that you select your pivot and swap it into the last position prior to calling hoarePartition.
