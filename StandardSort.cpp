@@ -9,10 +9,6 @@ int standardSort(std::vector<int>& nums, int& duration ){
     std::chrono::duration<double> diff = end - start;
     duration = static_cast<int>(diff.count() * 1000);  // Convert to milliseconds
 
-    for (int x : nums){
-            std::cout << x << " ";
-        }
-        std::cout << "\n";
         
     if (nums.size() % 2 == 0 )
     {

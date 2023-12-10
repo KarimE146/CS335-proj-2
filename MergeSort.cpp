@@ -14,15 +14,7 @@ void mergeSortRecursive(const std::vector<int>& nums, std::vector<int>& sorted) 
     std::vector<int> sortedLeft, sortedRight;
 
     mergeSortRecursive(left, sortedLeft);
-    for (int x : sortedLeft){
-            std::cout << x << " ";
-        }
-        std::cout << "\n";
     mergeSortRecursive(right, sortedRight);
-    for (int x : sortedRight){
-            std::cout << x << " ";
-        }
-        std::cout << "\n";
     sorted.clear(); 
     std::merge(sortedLeft.begin(), sortedLeft.end(), sortedRight.begin(), sortedRight.end(), std::back_inserter(sorted));
 }
@@ -33,12 +25,7 @@ int mergeSort(std::vector<int>& nums, int& duration) {
 
     std::vector<int> temp(nums.size());
     mergeSortRecursive(nums,temp);
-    
-    for (int x : temp){
-            std::cout << x << " ";
-        }
-        std::cout << "\n";
-    
+
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = static_cast<int>(diff.count() * 1000);

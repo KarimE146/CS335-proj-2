@@ -20,12 +20,12 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
             return nums.begin() + j; 
         }
 
-        std::swap(nums[i], nums[j]);
+        std::iter_swap(nums.begin() + i, nums.begin() + j);
     }
 }
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    if (high - low > 0) {
+    if (high - low > 10) {
         auto pivotPos = hoarePartition(nums, low, high);
         if (pivotPos > low) {
             quickSelectHelper(nums, low, pivotPos);
@@ -33,10 +33,9 @@ void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, s
 
         if (pivotPos + 1 < high) {
             quickSelectHelper(nums, pivotPos + 1, high);
-        }else{
-        std::sort(nums.begin(),nums.end());
         }
-        //no clue how this works but it does? I think ?
+    } else {
+        std::sort(nums.begin(), nums.end());
     }
 }
 
@@ -56,6 +55,7 @@ int quickSelect(std::vector<int>& nums, int& duration) {
     //median of 3 method^
 
     quickSelectHelper(nums, nums.begin(), nums.end());
+
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
