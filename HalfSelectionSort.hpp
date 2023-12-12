@@ -12,7 +12,7 @@ int halfSelectionSort(std::vector<int>& nums, int& duration) {
     if (nums.size() > 50000) {
         std::cout << "The input was too big for selection sort.";
     } else {
-        for (auto i = nums.begin(); i != nums.begin() + (nums.size() / 2) +1; ++i) {
+        for (auto i = nums.begin(); i != nums.end(); ++i) {
             auto min = i; // sets min to be i which iterated through the vector
 
             for (auto j = i + 1; j != nums.end(); ++j) {
