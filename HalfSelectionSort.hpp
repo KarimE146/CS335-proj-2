@@ -7,6 +7,7 @@
 #include <chrono>
 
 int halfSelectionSort(std::vector<int>& nums, int& duration) {
+    int count = 0;
     auto start = std::chrono::high_resolution_clock::now();
 
     if (nums.size() > 50000) {
@@ -15,12 +16,19 @@ int halfSelectionSort(std::vector<int>& nums, int& duration) {
         for (auto i = nums.begin(); i != nums.end(); ++i) {
             auto min = i; // sets min to be i which iterated through the vector
 
+            if (count == (nums.size()/2) + (nums.size()%2))
+            {
+                break;
+            }
+            
+
             for (auto j = i + 1; j != nums.end(); ++j) {
                 if (*j < *min) {
                     min = j;
                 }
             }
-            std::iter_swap(min, i);
+            std::swap(*i, *min);
+            count++;
         }
     }
 
