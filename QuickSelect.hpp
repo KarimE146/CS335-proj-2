@@ -8,40 +8,31 @@
 #include <cmath>
 
 std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    auto center = low + std::distance(low, high) / 2;
-
-    if (*center < *low)
-        std::swap(*low, *center);
-    if (*high < *low)
-        std::swap(*low, *high);
-    if (*high < *center)
-        std::swap(*center, *high);
-
-    // Swap the median into the last position without ordering the three
-    std::swap(*center, *(high - 1));
-
-    //std::cout << *low << " "<< *center << " "<< *high << " "<< std::endl;
-
-    return high - 1;
+    std::vector<int>::iterator mid = low + std::distance(low, high) / 2;
+    if (*low > *mid)
+        std::iter_swap(low, mid);
+    if (*low > *high)
+        std::iter_swap(low, high);
+    if (*mid > *high)
+        std::iter_swap(mid, high);
+    return mid;
 }
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    int pivot = *high; 
-    auto i = low;
+    auto pivot = high; 
+    auto i = low + 1;
     auto j = high - 1;
 
-        
-
     while (true) {
-        while (*i < pivot && i < high) {
+        while (i < pivot) {
             ++i;
         }
-        while (*j > pivot && j > low) {
+        while (j > pivot) {
             --j;
         }
 
         if (i >= j) {
-            std::swap(*i, *high);
+            std::iter_swap(i, j);
             return i;
         }
 
@@ -52,14 +43,13 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     if (high - low > 10) {
-        auto mid = low + (high - low) / 2;
-        std::swap(*mid, *high);
-        auto pivotPos = hoarePartition(nums, low, high);
+        auto pivot = medianOfThree(nums, low, high);
+        std::swap(*pivot, *high); // Move pivot to end for partitioning
+       
+        auto splitPoint = hoarePartition(nums, low, high);
 
-        //std::cout << *low << " " <<*pivotPos<< " " << *high<< " " << std::endl;
-
-        quickSelectHelper(nums, low, pivotPos - 1);
-        quickSelectHelper(nums, pivotPos, high);
+        quickSelectHelper(nums, low, splitPoint - 1);
+        quickSelectHelper(nums, splitPoint , high);
     } else {
         std::sort(low, high + 1);
     }
@@ -67,7 +57,6 @@ void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, s
 
 int quickSelect(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();
-
     quickSelectHelper(nums, nums.begin(), nums.end());
 
     auto end = std::chrono::high_resolution_clock::now();
