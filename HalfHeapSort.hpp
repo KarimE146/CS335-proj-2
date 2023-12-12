@@ -9,55 +9,55 @@
 // 12 5 1 99 21 70 60 77 102 96 55 43 93 38 89 11 
 // 55
 // 55 70 60 89 99 93 77 102 96 
-inline int leftChild(int i) {
-    return 2 * i + 1;
-}
-void percDown(std::vector<int>& heap, std::vector<int>::size_type hole) {
-    int temp = std::move(heap[hole]);
+// inline int leftChild(int i) {
+//     return 2 * i + 1;
+// }
+// void percDown(std::vector<int>& heap, std::vector<int>::size_type hole) {
+//     int temp = std::move(heap[hole]);
 
-    while (hole * 2 + 1 < heap.size()) {
-        std::vector<int>::size_type child = hole * 2 + 1;
-        if (child != heap.size() - 1 && heap[child] > heap[child + 1]) {
-            ++child;
-        }
-        if (heap[child] < temp) {
-            heap[hole] = std::move(heap[child]);
-            hole = child;
-        } else {
-            break;
-        }
-    }
+//     while (hole * 2 + 1 < heap.size()) {
+//         std::vector<int>::size_type child = hole * 2 + 1;
+//         if (child != heap.size() - 1 && heap[child] > heap[child + 1]) {
+//             ++child;
+//         }
+//         if (heap[child] < temp) {
+//             heap[hole] = std::move(heap[child]);
+//             hole = child;
+//         } else {
+//             break;
+//         }
+//     }
 
-    heap[hole] = std::move(temp);
-}
+//     heap[hole] = std::move(temp);
+// }
 
-void buildHeap(std::vector<int>& heap) {
-    for (int i = (heap.size() - 2) / 2; i >= 0; --i) {
-        percDown(heap, i);
-    }
-}
+// void buildHeap(std::vector<int>& heap) {
+//     for (int i = (heap.size() - 2) / 2; i >= 0; --i) {
+//         percDown(heap, i);
+//     }
+// }
 
-int halfHeapSort(std::vector<int>& nums, int& duration) {
-    auto start_time = std::chrono::high_resolution_clock::now();
+// int halfHeapSort(std::vector<int>& nums, int& duration) {
+//     auto start_time = std::chrono::high_resolution_clock::now();
 
-    nums.push_back(std::move(nums[0]));
-    nums.erase(nums.begin());
+//     nums.push_back(std::move(nums[0]));
+//     nums.erase(nums.begin());
 
-    buildHeap(nums);
+//     buildHeap(nums);
 
-    while (nums.size() > (nums.size() / 2 + 1)) {
-        std::swap(nums[0], nums[nums.size() - 1]);
-        nums.pop_back();
-        percDown(nums, 0);
-    }
+//     while (nums.size() > (nums.size() / 2 + 1)) {
+//         std::swap(nums[0], nums[nums.size() - 1]);
+//         nums.pop_back();
+//         percDown(nums, 0);
+//     }
 
-    nums.resize(nums.size() / 2 + 1);
+//     nums.resize(nums.size() / 2 + 1);
 
-    auto end_time = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+//     auto end_time = std::chrono::high_resolution_clock::now();
+//     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-    return nums[0];
-}
+//     return nums[0];
+// }
 
 
 
