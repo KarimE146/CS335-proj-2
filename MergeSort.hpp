@@ -34,6 +34,11 @@ int mergeSort(std::vector<int>& nums, int& duration) {
     std::vector<int> temp(nums.size());
     mergeSortRecursive(nums,temp);
 
+    for (int x : temp){
+        std::cout << x << " ";
+    }
+    std::cout << "\n";
+    
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = static_cast<int>(diff.count() * 1000);

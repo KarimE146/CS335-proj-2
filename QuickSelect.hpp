@@ -9,6 +9,8 @@
 
 #include "QuickSelect.hpp"
 
+#include "QuickSelect.hpp"
+
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     int pivot = *low; 
     auto i = low - nums.begin();
@@ -77,4 +79,5 @@ int quickSelect(std::vector<int>& nums, int& duration) {
         return nums[nums.size() / 2];
     } // Return the median
 }
+
 #endif
