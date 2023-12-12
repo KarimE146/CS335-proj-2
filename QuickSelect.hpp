@@ -20,6 +20,8 @@ std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int
     // Swap the median into the last position without ordering the three
     std::swap(*center, *(high - 1));
 
+    //std::cout << *low << " "<< *center << " "<< *high << " "<< std::endl;
+
     return high - 1;
 }
 
@@ -27,6 +29,8 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     int pivot = *high; 
     auto i = low;
     auto j = high - 1;
+
+        
 
     while (true) {
         while (*i < pivot && i < high) {
@@ -42,6 +46,7 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
         }
 
         std::swap(*i, *j);
+        //std::cout << *low<< " " << pivot << " " << *high << " "<< std::endl;
     }
 }
 
@@ -50,6 +55,8 @@ void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, s
         auto mid = low + (high - low) / 2;
         std::swap(*mid, *high);
         auto pivotPos = hoarePartition(nums, low, high);
+
+        //std::cout << *low << " " <<*pivotPos<< " " << *high<< " " << std::endl;
 
         quickSelectHelper(nums, low, pivotPos - 1);
         quickSelectHelper(nums, pivotPos, high);
