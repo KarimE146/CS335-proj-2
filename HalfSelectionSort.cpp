@@ -1,4 +1,4 @@
-#include "HalfHeapSort.hpp"
+#include "HalfSelectionSort.hpp"
 
 int halfSelectionSort(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();

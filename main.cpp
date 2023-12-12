@@ -27,18 +27,25 @@ int main() {
         return 1;
     }
 
-    int duration;
 
-    // Make a copy of the original vector
+   int duration;
+
+    //Make a copy of the original vector
     std::vector<int> numsCopy = nums;
 
-    int qs = halfHeapSort(numsCopy, duration);
+    int qs = quickSelect(numsCopy, duration);
 
     
     if (qs != -1) {
         std::cout << "Median found by QuickSelect: " << qs << "\n";
         std::cout << "Time taken: " << duration << " milliseconds.\n";
     }
+
+    for (int x : numsCopy)
+    {
+        std::cout << x << " ";
+    }
+    
 
     // std::vector<int> vect;
  
@@ -75,5 +82,9 @@ int main() {
     // std::cout << "\n";
 
 
-    return 0;
+    // return 0;
 }
+
+
+
+//50492874

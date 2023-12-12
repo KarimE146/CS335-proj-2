@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 
 int quickSelect ( std::vector<int>& nums, int& duration );
 std::vector<int>::iterator hoarePartition ( std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high );
