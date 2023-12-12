@@ -7,77 +7,71 @@
 #include <chrono>
 #include <cmath>
 
-#include "QuickSelect.hpp"
+std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
+    auto center = low + std::distance(low, high) / 2;
 
-#include "QuickSelect.hpp"
+    if (*center < *low)
+        std::swap(*low, *center);
+    if (*high < *low)
+        std::swap(*low, *high);
+    if (*high < *center)
+        std::swap(*center, *high);
+
+    // Swap the median into the last position without ordering the three
+    std::swap(*center, *(high - 1));
+
+    return high - 1;
+}
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    int pivot = *low; 
-    auto i = low - nums.begin();
-    auto j = high - nums.begin();
-
-    // we have to use Itr's so thats how we get the inciced for the first and last
+    int pivot = *high; 
+    auto i = low;
+    auto j = high - 1;
 
     while (true) {
-        do {
+        while (*i < pivot && i < high) {
             ++i;
-        } while (nums[i] < pivot);
-
-        do {
+        }
+        while (*j > pivot && j > low) {
             --j;
-        } while (nums[j] > pivot);
-
-        if (i >= j) {
-            return nums.begin() + j; 
         }
 
-        std::iter_swap(nums.begin() + i, nums.begin() + j);
+        if (i >= j) {
+            std::swap(*i, *high);
+            return i;
+        }
+
+        std::swap(*i, *j);
     }
 }
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     if (high - low > 10) {
+        auto mid = low + (high - low) / 2;
+        std::swap(*mid, *high);
         auto pivotPos = hoarePartition(nums, low, high);
-        if (pivotPos > low) {
-            quickSelectHelper(nums, low, pivotPos);
-        }
 
-        if (pivotPos + 1 < high) {
-            quickSelectHelper(nums, pivotPos + 1, high);
-        }
+        quickSelectHelper(nums, low, pivotPos - 1);
+        quickSelectHelper(nums, pivotPos, high);
     } else {
-        std::sort(nums.begin(), nums.end());
+        std::sort(low, high + 1);
     }
 }
 
 int quickSelect(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();
 
-    auto middle = nums.begin() + nums.size() / 2;
-    if (*middle < *nums.begin()) {
-        std::swap(*middle, *nums.begin());
-    }
-    if (*(nums.end() - 1) < *nums.begin()) {
-        std::swap(*(nums.end() - 1), *nums.begin());
-    }
-    if (*middle < *(nums.end() - 1)) {
-        std::swap(*middle, *(nums.end() - 1));
-    }
-    //median of 3 method^
-
     quickSelectHelper(nums, nums.begin(), nums.end());
-
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff = end - start;
     duration = static_cast<int>(diff.count() * 1000);
 
-    if (nums.size() % 2 == 0 )
-    {
-        return nums[(nums.size() / 2) -1];
-    }else{
+    if (nums.size() % 2 == 0) {
+        return nums[(nums.size() / 2) - 1];
+    } else {
         return nums[nums.size() / 2];
-    } // Return the median
+    }
 }
 
 #endif

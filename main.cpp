@@ -33,7 +33,7 @@ int main() {
     //Make a copy of the original vector
     std::vector<int> numsCopy = nums;
 
-    int qs = halfSelectionSort(numsCopy, duration);
+    int qs = quickSelect(numsCopy, duration);
 
     
     if (qs != -1) {
