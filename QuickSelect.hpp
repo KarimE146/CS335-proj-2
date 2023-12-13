@@ -21,7 +21,7 @@ std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int
 }
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    auto pivot = medianOfThree(nums, low, high);
+    auto pivot = high;
 
     auto i = low - 1;
     auto j = high;
