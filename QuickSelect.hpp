@@ -27,17 +27,24 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     auto j = high;
 
     while (true) {
-        do {
-            ++i;
-        } while (*i < *pivot);
-        do {
-            --j;
-        } while (*j > *pivot);
+        while (i <= j && *i <= *pivot) {
+            if (*i == *pivot) {
+                std::iter_swap(i, j);
+            } else {
+                ++i;
+            }
+        }
+        while (j >= i && *j >= *pivot) {
+            if (*j == *pivot) {
+                std::iter_swap(j, i);
+            } else {
+                --j;
+            }
+        }
 
-        if (i < j) {
-            std::iter_swap(i, j);
-        }else{
-            return j;
+        if (i >= j) {
+            std::iter_swap(i, pivot);
+            return i;
         }
     }
 }
