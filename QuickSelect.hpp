@@ -1,10 +1,13 @@
 #ifndef QuickSelect_HPP
 #define QuickSelect_HPP
-
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <chrono>
 #include "QuickSelect.hpp"
 
 std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    std::vector<int>::iterator mid = low + std::distance(low, high) / 2;
+    auto mid = low + (high - low) / 2;
 
     if (*low > *mid)
         std::iter_swap(low, mid);
@@ -26,10 +29,10 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     while (true) {
         do {
             ++i;
-        } while (*(i) < *(pivot));
+        } while (*(i) < (*pivot));
         do {
             --j;
-        } while (*(j) > *(pivot));
+        } while (*(j) > (*pivot));
 
         if (i >= j) {
             return j;
@@ -40,18 +43,23 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
 }
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    if (high - low > 0) {
-        auto partitionIndex = hoarePartition(nums, low, high);
-        std::iter_swap(partitionIndex, high);
+    if (low + 10 < high) {
+        const auto piv = hoarePartition(nums, low, high);
 
-        quickSelectHelper(nums, low, partitionIndex - 1);
-        quickSelectHelper(nums, partitionIndex + 1, high);
+        std::iter_swap(piv, high - 1);
+
+        quickSelectHelper(nums, low, piv - 1);
+        quickSelectHelper(nums, piv + 1, high);
+    }else {
+        std::sort(low, high);
     }
 }
 
 int quickSelect(std::vector<int>& nums, int& duration) {
     auto start = std::chrono::high_resolution_clock::now();
+
     quickSelectHelper(nums, nums.begin(), nums.end() - 1);
+    
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> diff = end - start;
