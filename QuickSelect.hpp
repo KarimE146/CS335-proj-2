@@ -29,10 +29,10 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     while (true) {
         do {
             ++i;
-        } while (*(i) < (*pivot));
+        } while (i < pivot);
         do {
             --j;
-        } while (*(j) > (*pivot));
+        } while (j > pivot);
 
         if (i >= j) {
             return i;
