@@ -37,27 +37,18 @@ void buildHeap(std::vector<int>& heap) {
 int halfHeapSort(std::vector<int>& nums, int& duration) {
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    // Move the first element to the back
     nums.push_back(std::move(nums[0]));
     nums.erase(nums.begin());
 
-    // Adjust the size for the upcoming buildHeap
-    int originalSize = nums.size();
-    int newSize = (originalSize / 2) + 1;
-    nums.resize(newSize);
-
-    // Build the heap on the first half of the vector
     buildHeap(nums);
 
-    // Continue with the remaining steps of halfHeapSort
-    while (nums.size() > newSize) {
+    while (nums.size() > (nums.size() / 2 + 1)) {
         std::swap(nums[0], nums[nums.size() - 1]);
         nums.pop_back();
         percDown(nums, 0);
     }
 
-    // Restore the original size after sorting
-    nums.resize(originalSize);
+    nums.resize(nums.size() / 2 + 1);
 
     auto end_time = std::chrono::high_resolution_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
