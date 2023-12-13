@@ -34,10 +34,10 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
             --j;
         } while (*j > *pivot);
 
-        if (i >= j) {
-            return i;
-        }else{
+        if (i < j) {
             std::iter_swap(i, j);
+        }else{
+            return j;
         }
     }
 }
