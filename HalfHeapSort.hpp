@@ -7,7 +7,7 @@
 #include <chrono>
 
 
-inline int leftChild(int i) {
+inline int leftChild(int i) {//access to left child
     return 2 * i;
 }
 void percDown(std::vector<int>& heap, std::vector<int>::size_type hole){
