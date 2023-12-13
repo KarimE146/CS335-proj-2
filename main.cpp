@@ -33,7 +33,7 @@ int main() {
     //Make a copy of the original vector
     std::vector<int> numsCopy = nums;
 
-    int qs = HalfHeapSort_HPP(numsCopy, duration);
+    int qs = halfHeapSort(numsCopy, duration);
 
     
     if (qs != -1) {
