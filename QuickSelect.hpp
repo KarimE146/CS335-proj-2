@@ -36,9 +36,9 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
 
         if (i >= j) {
             return i;
+        }else{
+            std::iter_swap(i, j);
         }
-
-        std::iter_swap(i, j);
     }
 }
 
