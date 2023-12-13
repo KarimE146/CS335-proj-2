@@ -20,26 +20,27 @@ std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int
     // return high - 1;
 }
 
+
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     auto pivot = high;
     auto i = low - 1;
     auto j = high;
 
     while (true) {
+        
+        do {
+            i++;
+            if (*i == *pivot) {
+                std::iter_swap(i, j);
+            }
+        } while (i < high && *i < *pivot);
 
         do {
-            ++i;
-            if (nums[*i] == nums[*pivot]) {
-                std::swap(nums[*i], nums[*j]);
+            j--;
+            if (*j == *pivot) {
+                std::iter_swap(j, i);
             }
-        } while (i < high && nums[*i] < nums[*pivot]);
-
-        do {
-            --j;
-            if (nums[*j] == nums[*pivot]) {
-                std::swap(nums[*j], nums[*i]);
-            }
-        } while (j > low && nums[*j] > nums[*pivot]);
+        } while (j > low &&*j > *pivot);
 
         if (i < j) {
             std::iter_swap(i, j);
