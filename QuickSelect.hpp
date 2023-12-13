@@ -28,7 +28,7 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     while (true) {
         do {
             ++i;
-            if (i != high && *i == *pivot) {
+            if (*i == *pivot) {
                 std::iter_swap(i, j);
             }
         } while (i < high && *i < *pivot);
@@ -37,7 +37,7 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
             if (j != low && *j == *pivot) {
                 std::iter_swap(j, i);
             }
-        } while (j > low && *j > *pivot);
+        } while (*j > *pivot);
 
         if (i < j) {
             std::iter_swap(i, j);
