@@ -24,7 +24,7 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
     auto pivot = high;
 
     auto i = low - 1;
-    auto j = high + 1;
+    auto j = high;
 
     while (true) {
         do {
