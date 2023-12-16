@@ -7,47 +7,41 @@
 #include "QuickSelect.hpp"
 
 std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    // auto mid = low + (high - low) / 2;
+    auto mid = low + (high - low) / 2;
 
-    // if (*low > *mid)
-    //     std::iter_swap(low, mid);
-    // if (*low > *high)
-    //     std::iter_swap(low, high);
-    // if (*mid > *high)
-    //     std::iter_swap(mid, high);
+    if (*low > *mid)
+        std::iter_swap(low, mid);
+    if (*low > *high)
+        std::iter_swap(low, high);
+    if (*mid > *high)
+        std::iter_swap(mid, high);
 
-    // std::iter_swap(mid, high - 1);
-    // return high - 1;
+    std::iter_swap(mid, high - 1);
+    return high - 1;
 }
 
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    auto pivot = high;
+    auto median = medianOfThree(nums,low, high);
+    int pivotVal = *median;
+    iter_swap(median, high); 
+
     auto i = low ;
     auto j = high;
 
     while (true) {
         
-        
         do {
             i++;
-            if (*i == *pivot) {
-                std::iter_swap(i, j);
-            }
-        } while (i < j && *i < *pivot);
+        } while (i < j && *i < pivotVal);
 
         do {
             j--;
-            if (*j == *pivot) {
-                std::iter_swap(j, i);
-            }
-        } while (j > i &&*j >= *pivot);
+        } while (j > i &&*j >= pivotVal);
 
-        if (i >= j)
-            {
-                break;
-            }
-        if (i < j) {
+        if (i >= j){
+            break;
+        }else if (i < j) {
             std::swap(*i, *j);
         }
     }
@@ -56,33 +50,33 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
 }
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    // if (low + 10 < high) {
-    //     const auto piv = hoarePartition(nums, low, high);
+    if (low + 10 < high) {
+        const auto piv = hoarePartition(nums, low, high);
 
-    //     std::iter_swap(piv, high - 1);
+        std::iter_swap(piv, high - 1);
 
-    //     quickSelectHelper(nums, low, piv - 1);
-    //     quickSelectHelper(nums, piv + 1, high);
-    // }else {
-    //     std::sort(low, high);
-    // }
+        quickSelectHelper(nums, low, piv - 1);
+        quickSelectHelper(nums, piv + 1, high);
+    }else {
+        std::sort(low, high);
+    }
 }
 
 int quickSelect(std::vector<int>& nums, int& duration) {
-    // auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
-    // quickSelectHelper(nums, nums.begin(), nums.end() - 1);
+    quickSelectHelper(nums, nums.begin(), nums.end() - 1);
 
-    // auto end = std::chrono::high_resolution_clock::now();
+    auto end = std::chrono::high_resolution_clock::now();
 
-    // std::chrono::duration<double> diff = end - start;
-    // duration = static_cast<int>(diff.count() * 1000);
+    std::chrono::duration<double> diff = end - start;
+    duration = static_cast<int>(diff.count() * 1000);
 
-    // if (nums.size() % 2 == 0) {
-    //     return nums[(nums.size() / 2) - 1];
-    // } else {
-    //     return nums[nums.size() / 2];
-    // }
+    if (nums.size() % 2 == 0) {
+        return nums[(nums.size() / 2) - 1];
+    } else {
+        return nums[nums.size() / 2];
+    }
 }
 #endif
 
