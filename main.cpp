@@ -88,3 +88,32 @@ int main() {
 
 
 //50492874
+
+
+/*std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
+    auto median = medianOfThree(nums,low, high);
+    int pivotVal = *median;
+    std::iter_swap(median, high); 
+
+    auto i = low ;
+    auto j = high;
+
+    while (true) {  
+        
+        do {
+            i++;
+        } while (i < j && *i < pivotVal);
+
+        do {
+            j--;
+        } while (j > i &&*j >= pivotVal);
+
+        if (i >= j){
+            break;
+        }else if (i < j) {
+            std::swap(*i, *j);
+        }
+    }
+    std::swap(*i, *high);
+    return i;
+}*/

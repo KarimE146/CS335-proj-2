@@ -6,79 +6,103 @@
 #include <chrono>
 #include "QuickSelect.hpp"
 
-std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    auto mid = low + (high - low) / 2;
+std::vector<int>::iterator medianOfThree(std::vector<int>& nums,std::vector<int>::iterator& low, std::vector<int>::iterator& high)
+{
+        auto middle = low + distance(low, high) / 2;
 
-    if (*low > *mid)
-        std::iter_swap(low, mid);
-    if (*low > *high)
-        std::iter_swap(low, high);
-    if (*mid > *high)
-        std::iter_swap(mid, high);
+        if (nums.size() % 2 == 0)
+            middle[(nums.size() / 2) - 1];
 
-    std::iter_swap(mid, high - 1);
-    return high - 1;
+        if (*low < *middle && *middle < *high) {
+        std::swap(*middle, *high);
+    } else if (*high < *middle && *middle < *low) {
+        std::swap(*middle, *high);
+    } else if (*middle < *low && *low < *high) {
+        std::swap(*low, *high);
+    } else if (*high < *low && *low < *middle) {
+        std::swap(*low, *high);
+    }
+
+    return high;
 }
 
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     auto median = medianOfThree(nums,low, high);
-    int pivotVal = *median;
-    iter_swap(median, high); 
+    std::iter_swap(median, high); 
 
     auto i = low ;
     auto j = high;
 
-    while (true) {
+    while (true) {  
         
-        do {
+        while (i < j && *i < *median)
+        {
             i++;
-        } while (i < j && *i < pivotVal);
-
-        do {
-            j--;
-        } while (j > i &&*j >= pivotVal);
-
-        if (i >= j){
-            break;
-        }else if (i < j) {
-            std::swap(*i, *j);
         }
+        while (j > i && *j >= *median)
+        {
+            j--;
+        }
+
+        if (i >= j)
+        {
+            break;
+        }
+
+        std::swap(*i, *j);
     }
     std::swap(*i, *high);
     return i;
 }
 
-void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
-    if (low + 10 < high) {
-        const auto piv = hoarePartition(nums, low, high);
-
-        std::iter_swap(piv, high - 1);
-
-        quickSelectHelper(nums, low, piv - 1);
-        quickSelectHelper(nums, piv + 1, high);
-    }else {
-        std::sort(low, high);
+int quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high, int mid)
+{
+    auto hp = hoarePartition(nums, low, high); 
+    int diff = std::distance(low, hp);
+    
+    if (high - low >= 10)
+    {
+        if (diff == mid)
+        {
+            return *hp; 
+        }
+        else if (diff > mid)
+        {
+            return quickSelectHelper(nums, low, hp - 1, mid); 
+        }
+        else
+        {
+            return quickSelectHelper(nums, hp + 1, high, mid - diff - 1);
+        }
+    }else if (high - low < 10){
+        std::sort(low, high + 1); 
+        return *(low + mid); 
     }
 }
 
-int quickSelect(std::vector<int>& nums, int& duration) {
-    auto start = std::chrono::high_resolution_clock::now();
 
-    quickSelectHelper(nums, nums.begin(), nums.end() - 1);
+int quickSelect(std::vector<int>& nums, int& duration)
+{
+    auto start = std::chrono::high_resolution_clock::now(); 
 
-    auto end = std::chrono::high_resolution_clock::now();
+    int mid = (nums.size() - 1) / 2;
 
-    std::chrono::duration<double> diff = end - start;
-    duration = static_cast<int>(diff.count() * 1000);
+    quickSelectHelper(nums, nums.begin(), nums.end() - 1, mid); 
+
+    auto end = std::chrono::high_resolution_clock::now(); 
+    auto time_lapse = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    duration = static_cast<int>(time_lapse.count()); 
 
     if (nums.size() % 2 == 0) {
         return nums[(nums.size() / 2) - 1];
     } else {
         return nums[nums.size() / 2];
-    }
+    } // Return the median 
 }
 #endif
+//50492874
+//11 5 1 12 21 38 43 55 60 70 77 89 93 96 102 99 
 
 
 // Implement a quickselect algorithm, which works like a quicksort, except that after partitioning your array into the part that's less than your pivot and the part that's 
