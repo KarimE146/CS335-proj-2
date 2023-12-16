@@ -23,31 +23,36 @@ std::vector<int>::iterator medianOfThree(std::vector<int>& nums, std::vector<int
 
 std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
     auto pivot = high;
-    auto i = low - 1;
+    auto i = low ;
     auto j = high;
 
     while (true) {
+        
         
         do {
             i++;
             if (*i == *pivot) {
                 std::iter_swap(i, j);
             }
-        } while (i < high && *i < *pivot);
+        } while (i < j && *i < *pivot);
 
         do {
             j--;
             if (*j == *pivot) {
                 std::iter_swap(j, i);
             }
-        } while (j > low &&*j > *pivot);
+        } while (j > i &&*j >= *pivot);
 
+        if (i >= j)
+            {
+                break;
+            }
         if (i < j) {
-            std::iter_swap(i, j);
-        } else {
-            return j;
+            std::swap(*i, *j);
         }
     }
+    std::swap(*i, *high);
+    return i;
 }
 
 void quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high) {
