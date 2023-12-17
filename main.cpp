@@ -10,12 +10,13 @@
 #include "HalfHeapSort.hpp"
 #include "MedianOfMediansMethod.hpp"
 #include "QuickSelect.hpp"
+#include "WorstCaseQuickSelect.hpp"
 
 int main() {
     //Read input from file into vector
     std::vector<int> nums;
     int num;
-    std::ifstream inputFile("input1.txt");
+    std::ifstream inputFile("input9.txt");
 
     if (inputFile.is_open()) {
         while (inputFile >> num) {
@@ -31,20 +32,18 @@ int main() {
    int duration;
 
     //Make a copy of the original vector
-    std::vector<int> numsCopy = nums;
-
-    int qs = quickSelect(numsCopy, duration);
+    std::vector<int> ssc = worstCaseQuickSelect();
+    int ss = quickSelect(ssc, duration);
 
     
-    if (qs != -1) {
-        std::cout << "Median found by HS: " << qs << "\n";
+    if (ss != -1) {
+        std::cout << "Median found by ss: " << ss << "\n";
         std::cout << "Time taken: " << duration << " milliseconds.\n";
     }
 
-    for (int x : numsCopy)
-    {
-        std::cout << x << " ";
-    }
+    
+
+    
     
 
 //     std::vector<int> vect;

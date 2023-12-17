@@ -58,26 +58,30 @@ std::vector<int>::iterator hoarePartition(std::vector<int>& nums, std::vector<in
 
 int quickSelectHelper(std::vector<int>& nums, std::vector<int>::iterator low, std::vector<int>::iterator high, int mid)
 {
-    auto hp = hoarePartition(nums, low, high); 
-    int diff = std::distance(low, hp);
+    auto hoare = hoarePartition(nums, low, high); 
+    int diff = std::distance(low, hoare);
     
     if (high - low >= 10)
     {
         if (diff == mid)
         {
-            return *hp; 
+            return *hoare; 
         }
+        // If the difference is greater than the mid, then we know that the median is in the right side of the vector
         else if (diff > mid)
         {
-            return quickSelectHelper(nums, low, hp - 1, mid); 
+            return quickSelectHelper(nums, low, hoare - 1, mid); 
         }
+        // If the difference is less than the mid, then we know that the median is in the left side of the vector
         else
         {
-            return quickSelectHelper(nums, hp + 1, high, mid - diff - 1);
+            return quickSelectHelper(nums, hoare + 1, high, mid - diff - 1);
         }
+        // If the difference is equal to the mid, then we know that the median is in the right side of the vector
     }else if (high - low < 10){
         std::sort(low, high + 1); 
         return *(low + mid); 
+        //aorts if the size is < 10
     }
 }
 
